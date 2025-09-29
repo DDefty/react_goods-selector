@@ -15,27 +15,46 @@ export const goods = [
   'Garlic',
 ];
 
-export class App extends React.Component {
+interface State {
+  selectedGood: string;
+}
+
+export class App extends React.Component<{}, State> {
   state = {
     selectedGood: 'Jam',
+  };
+
+  // Select a good by name
+  handleSelectGood = (good: string) => {
+    this.setState({ selectedGood: good });
+  };
+
+  // Clear the current selection
+  handleClearSelection = () => {
+    this.setState({ selectedGood: '' });
+  };
+
+  // Remove (clear) selection — kept as a separate method per request
+  handleRemoveSelection = () => {
+    this.setState({ selectedGood: '' });
   };
 
   render() {
     return (
       <main className="section container">
         <h1 className="title is-flex is-align-items-center">
-          {this.state.selectedGood !== null ? (
+          {this.state.selectedGood !== '' ? (
             <>{this.state.selectedGood} is selected</>
           ) : (
             <>No goods selected</>
           )}
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          {this.state.selectedGood !== null ? (
+          {this.state.selectedGood !== '' ? (
             <button
               data-cy="ClearButton"
               type="button"
               className="delete ml-3"
-              onClick={() => this.setState({ selectedGood: null })}
+              onClick={this.handleClearSelection}
             />
           ) : null}
         </h1>
@@ -59,9 +78,7 @@ export class App extends React.Component {
                         data-cy="AddButton"
                         type="button"
                         className="button"
-                        onClick={() => {
-                          this.setState({ selectedGood: good });
-                        }}
+                        onClick={() => this.handleSelectGood(good)}
                       >
                         +
                       </button>
@@ -70,9 +87,7 @@ export class App extends React.Component {
                         data-cy="RemoveButton"
                         type="button"
                         className="button is-info"
-                        onClick={() => {
-                          this.setState({ selectedGood: null });
-                        }}
+                        onClick={this.handleRemoveSelection}
                       >
                         -
                       </button>
