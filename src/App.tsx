@@ -27,6 +27,7 @@ export class App extends React.Component<{}, State> {
   // Select a good by reading the data-good attribute from the event target
   handleSelectGood = (e: React.MouseEvent<HTMLButtonElement>) => {
     const good = e.currentTarget.dataset.good || '';
+
     this.setState({ selectedGood: good });
   };
 
